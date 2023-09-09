@@ -1,0 +1,149 @@
+Which testing framework u used so far ?
+- Selenium
+    --> TestNG
+    --> Cucumber-JUnit
+- Database
+    --> Junit5
+    --> Cucumber-JUnit
+- API
+    --> Junit5
+    --> Cucumber-JUnit
+    --> Serenity
+Which tools we are using to do API TEST ?
+-->    Manual --> POSTMAN
+           --> Is it possbile to use POSTMAN as automation tool ?
+               --> YES
+-->    Automation --> Rest Assured Library
+ -->   Assertions Library
+               --> Junit5
+--- API TESTING STEPS-----------------------------------
+    -> Read document to find which endpoint we are gonna use
+    -> Manual Testing
+    -> Automate your test case
+------- DEPENDENCIES -------------------------------------------------
+1 - Add Dependency
+        - RestAssured Dependency
+                <!-- This dependency for REST -->
+                <dependency>
+                    <groupId>io.rest-assured</groupId>
+                    <artifactId>rest-assured</artifactId>
+                    <version>5.2.1</version>
+                </dependency>
+        - JUnit5 Dependency
+                <!-- This dependency for Junit5 -->
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                    <version>5.9.2</version>
+                </dependency>
+----------------------------------------------------------------------
+Fruit API
+    - Doc --> https://api.predic8.de/shop/docs#/
+    - Base URL --> https://api.predic8.de
+BORED API
+     - Doc --> https://www.boredapi.com/documentation
+     - Base URL --> http://www.boredapi.com/api
+
+-------------------------------------------------------------------------
+
+
+REQUEST  --> CLIENT / POSTMAN / APPLICATIONS
+   HTTP METHOD --> GET/POST/PUT/DELETE
+   API URL/ENDPOINTS
+      - BASE URL --> The part of the URL which same for all request/endpoint
+        					Ex-> {{fruitURL}}
+      - ENDPOINTS --> Specific resource
+        					Ex-> {{fruitURL}}/endpoint
+
+   PARAMETERS  --> Path / Query Param --> used to filter response
+        - Path Param --> It is part of URL.We are gonna to get single resource
+
+            Ex 1 -> {{fruitURL}}/shop/customers/{id}
+            		{id} --> it is path param
+
+
+            	{
+                    "firstname": "Michael",
+                    "lastname": "Lachappele",
+                    "orders_url": "/shop/customers/2/orders/"
+                }
+
+            Ex 2 -> {{spartanURL}}/shop/customers/{id}/orders/
+            		{id} --> it is path param
+
+            	Response has orders information wit customer id=2
+
+                {
+                    "orders": [
+                        {
+                            "createdAt": "2023-04-01T02:05:13.741Z",
+                            "state": "ordered",
+                            "order_url": "/shop/orders/2242"
+                        },
+                        {
+                            "createdAt": "2023-04-01T02:05:13.744Z",
+                            "state": "delivered",
+                            "order_url": "/shop/orders/2249"
+                        }
+                    ]
+                }
+
+
+        - Query Param --> It is NOT part of URL.We are gonna use to filter resource
+
+            {{boredAPIURL}}/activity?minprice=0&maxprice=0.1
+
+            minprice and maxprice are query params
+            0 and 0.1 are values of these parameters
+
+            ? --> end of the URL and query params starting
+            & --> seperator between key and values
+
+
+            {
+                "activity": "Research a topic you're interested in",
+                "type": "education",
+                "participants": 1,
+                "price": 0,
+                "link": "",
+                "key": "3561421",
+                "accessibility": 0.9
+            }
+
+   HEADERS     --> Additional information about request
+        - Accept , application/json --> Hey API Please send me resposne in application/json
+        - Accept , application/xml --> Hey API Please send me resposne in application/xml
+
+
+   BODY/PAYLOAD
+
+RESPONSE
+   STATUS CODE --> indicate status of response (success or failure)
+
+    	- First thing that you need to check after getting response
+
+    	- Getting 200 or any other expected status code does not guarantee the payload has expected data
+
+    			- 2** --> Success
+    			- 4** --> Client Error
+    			- 5** --> Server Side issues
+
+   HEADERS     --> Additional information about response
+                Content Type , application/json --> Hey Client I am sending data in application/json format
+    	    	Content Type , application/xml --> Hey Client I am sending data in application/xml format
+
+
+   BODY        --> Body verification
+           	   --> Partially verification
+
+           	   -- CONTAINS
+           	        - NOT SUGGESTED - DOES NOT MAKE GUARANTEE
+           	   -- RESPONSE.PATH
+           	        - response.path("pathOFKeyFromResponse")
+                      --> it will return value that is stored in related key
+                      --> return type is T(generic) and decided by your variable data type you store
+           	   -- JSONPATH
+           	        - It has couple of methods to make it readable and return required type of data
+                        - getString
+                        - getInt
+                        - getLong
